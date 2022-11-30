@@ -26,11 +26,11 @@ public class ArticleQueryService {
     private BoardMapper boardMapper;
     
     public ArticleQueryService(ArticleQueryRepository articleRepository
-    					      ,ArticleRepository repository		
-    						  ,BoardMapper boardMapper) {
+    					      ,ArticleRepository repository) {		
+    						  //,BoardMapper boardMapper) {
     	this.articleRepository = articleRepository;
-    	this.repository = repository;
-    	this.boardMapper = boardMapper;    	
+    	this.repository = repository;    	
+    	this.boardMapper = null;    	
     }
     
 	public List<Article> getAritlceList(ArticleDTO.Search condition) {
