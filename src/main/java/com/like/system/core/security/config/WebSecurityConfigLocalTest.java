@@ -114,7 +114,7 @@ public class WebSecurityConfigLocalTest<S extends Session> {
 		return new SpringSessionBackedSessionRegistry<>(this.sessionRepository);
 	}
 	
-	@Bean
+	@Bean                                                        
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().requestMatchers("/static/**");
 	}
