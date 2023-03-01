@@ -1,6 +1,8 @@
 package com.like.system.core.jpa.domain;
 
 import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.CompositeType;
+import org.hibernate.annotations.CompositeTypeRegistration;
 //import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,6 +31,7 @@ import lombok.Getter;
     typeClass = AuditorDetailsType.class,
     defaultForType = AuditorDetails.class)
 */
+@CompositeTypeRegistration( embeddableClass = AuditorDetails.class, userType = AuditorDetailsType.class )
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractAuditEntity {
@@ -38,10 +41,13 @@ public abstract class AbstractAuditEntity {
     LocalDateTime createdDt;
 
     @CreatedBy
+    /*
     @Columns(columns = {
     					@Column(name = "CREATED_USER_ID", updatable = false),    
     					@Column(name = "CREATED_HOST_IP", updatable = false)
-    				   })	
+    				   })
+   	*/
+    //@CompositeType(AuditorDetailsType.class)
     AuditorDetails createdBy;
 
     @Column(name = "CREATED_APP_URL", updatable = false)
@@ -52,10 +58,12 @@ public abstract class AbstractAuditEntity {
     LocalDateTime modifiedDt;
 
     @LastModifiedBy
+    /*
     @Columns(columns = {
     					@Column(name = "MODIFIED_USER_ID"),        
     					@Column(name = "MODIFIED_HOST_IP")
     				   })
+    */
     AuditorDetails modifiedBy;   
 
     @Column(name = "MODIFIED_APP_URL")

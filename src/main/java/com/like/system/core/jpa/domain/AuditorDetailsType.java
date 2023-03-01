@@ -1,85 +1,84 @@
 package com.like.system.core.jpa.domain;
 
-import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
-import org.hibernate.usertype.UserType;
-
 import java.io.Serializable;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
 import java.util.Objects;
 
-public class AuditorDetailsType implements UserType {
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.metamodel.spi.ValueAccess;
+import org.hibernate.usertype.CompositeUserType;
 
-	@Override
-	public int getSqlType() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+public class AuditorDetailsType implements CompositeUserType<AuditorDetails> {
 
-	@Override
-	public Class returnedClass() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean equals(Object x, Object y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int hashCode(Object x) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Object nullSafeGet(ResultSet rs, int position, SharedSessionContractImplementor session, Object owner)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Object deepCopy(Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isMutable() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Serializable disassemble(Object value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object assemble(Serializable cached, Object owner) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object replace(Object detached, Object managed, Object owner) {
-		// TODO Auto-generated method stub
-		return null;
+	public static class AuditorDetailsMapper {
+		String loggedUser;   
+	    String hostIp;
 	}
 	
+	@Override
+	public Class<?> embeddable() {
+		return AuditorDetailsMapper.class;
+	}
+	
+	@Override
+	public Class<AuditorDetails> returnedClass() {
+		return AuditorDetails.class;
+	}
+
+	@Override
+	public AuditorDetails instantiate(ValueAccess values, SessionFactoryImplementor sessionFactory) {
+		final String loggedUser = values.getValue( 0, String.class );
+		final String hostIp = values.getValue( 1, String.class );
+		return new AuditorDetails(loggedUser, hostIp);
+	}
+	
+	@Override
+	public Object getPropertyValue(AuditorDetails component, int property) throws HibernateException {
+		switch ( property ) {
+		case 0:
+			return component.getLoggedUser();
+		case 1:
+			return component.getHostIp();
+	}
+		return null;
+	}
+
+	@Override
+	public boolean equals(AuditorDetails x, AuditorDetails y) {
+		return x == y || x != null && Objects.equals( x.getLoggedUser(), y.getLoggedUser() )
+				&& Objects.equals( x.getHostIp(), y.getHostIp() );
+	}
+
+	@Override
+	public int hashCode(AuditorDetails x) {
+		return Objects.hash( x.getLoggedUser(), x.getHostIp() );
+	}
+
+	@Override
+	public AuditorDetails deepCopy(AuditorDetails value) {
+		return value; // immutable
+	}
+
+	@Override
+	public boolean isMutable() {		
+		return false;
+	}
+
+	@Override
+	public Serializable disassemble(AuditorDetails value) {
+		return new String[] { value.getLoggedUser(), value.getHostIp() };
+
+	}
+
+	@Override
+	public AuditorDetails assemble(Serializable cached, Object owner) {
+		final String[] parts = (String[]) cached;
+		return new AuditorDetails( parts[0], parts[1] );
+	}
+
+	@Override
+	public AuditorDetails replace(AuditorDetails detached, AuditorDetails managed, Object owner) {
+		return detached;
+	}
 	
 }
