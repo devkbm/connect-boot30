@@ -124,9 +124,9 @@ public class CodeDTO {
 										
 			return Form.builder()
 					   .createdDt(entity.getCreatedDt())
-					   .createdBy(entity.getCreatedBy().getLoggedUser())
+					   .createdBy(entity.getCreatedBy() == null ? null : entity.getCreatedBy().getLoggedUser())
 					   .modifiedDt(entity.getModifiedDt())
-					   .modifiedBy(entity.getModifiedBy().getLoggedUser())					   
+					   .modifiedBy(entity.getModifiedBy() == null ? null : entity.getModifiedBy().getLoggedUser())					   
 					   .systemTypeCode(entity.getId().getSystemTypeCode())
 					   .codeId(entity.getId().getCodeId())
 					   .parentId(parent == null ? null : parent.getId().getCodeId())
