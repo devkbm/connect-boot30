@@ -1,6 +1,5 @@
 package com.like.system.core.jpa.domain;
 
-import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.CompositeType;
 import org.hibernate.annotations.CompositeTypeRegistration;
 //import org.hibernate.annotations.TypeDef;
@@ -10,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -41,13 +42,11 @@ public abstract class AbstractAuditEntity {
     LocalDateTime createdDt;
 
     @CreatedBy
-    /*
-    @Columns(columns = {
-    					@Column(name = "CREATED_USER_ID", updatable = false),    
-    					@Column(name = "CREATED_HOST_IP", updatable = false)
-    				   })
-   	*/
-    //@CompositeType(AuditorDetailsType.class)
+    @AttributeOverrides({
+        @AttributeOverride(name = "loggedUser", column = @Column(name = "CREATED_USER_ID")),
+        @AttributeOverride(name = "hostIp", column = @Column(name = "CREATED_HOST_IP"))
+    })    
+    @CompositeType(AuditorDetailsType.class)
     AuditorDetails createdBy;
 
     @Column(name = "CREATED_APP_URL", updatable = false)
@@ -57,13 +56,12 @@ public abstract class AbstractAuditEntity {
     @Column(name = "MODIFIED_DT")    
     LocalDateTime modifiedDt;
 
-    @LastModifiedBy
-    /*
-    @Columns(columns = {
-    					@Column(name = "MODIFIED_USER_ID"),        
-    					@Column(name = "MODIFIED_HOST_IP")
-    				   })
-    */
+    @LastModifiedBy    
+    @AttributeOverrides({
+        @AttributeOverride(name = "loggedUser", column = @Column(name = "MODIFIED_USER_ID")),
+        @AttributeOverride(name = "hostIp", column = @Column(name = "MODIFIED_HOST_IP"))
+    })       
+    @CompositeType(AuditorDetailsType.class)
     AuditorDetails modifiedBy;   
 
     @Column(name = "MODIFIED_APP_URL")

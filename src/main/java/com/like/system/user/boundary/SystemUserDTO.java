@@ -73,7 +73,8 @@ public class SystemUserDTO {
 			@NotBlank(message="직원번호를 입력해 주세요.")
 			String staffNo,
 			String name,
-			String deptCode,
+			String deptId,
+			String deptName,
 			String mobileNum,
 			String email,
 			String imageBase64,
@@ -86,7 +87,7 @@ public class SystemUserDTO {
 			) {
 		
 		public SystemUser newUser(Dept dept, Set<Authority> authorityList, Set<MenuGroup> menuGroupList) {
-			SystemUser entity = SystemUser.builder()					  					  
+			SystemUser entity = SystemUser.builder()										  
 										  .name(this.name)		
 										  .organizationCode(this.organizationCode)
 										  .staffNo(this.staffNo)
@@ -103,16 +104,19 @@ public class SystemUserDTO {
 			return entity;
 			
 		}
-		
+					
 		public void modifyUser(SystemUser user, Dept dept, Set<Authority> authorityList, Set<MenuGroup> menuGroupList) {
-			user.modifyEntity(staffNo
-							 ,name		
-							 ,organizationCode 
-							 ,mobileNum
-							 ,email							  
-							 ,dept
-							 ,authorityList
-							 ,menuGroupList);	
+						
+			user.modifyBuilder()			
+				.organizationCode(organizationCode)
+				.staffNo(staffNo)
+				.name(name)
+				.mobileNum(mobileNum)
+				.email(email)
+				.dept(dept)
+				.authorities(authorityList)
+				.menuGroupList(menuGroupList)
+				.modify();
 			
 			user.setAppUrl(clientAppUrl);
 		}
@@ -121,14 +125,15 @@ public class SystemUserDTO {
 			
 			if (entity == null) return null;
 			
-			Optional<Dept> dept = Optional.ofNullable(entity.getDept());
+			Optional<Dept> dept = Optional.ofNullable(entity.getDept());			
 			
 			FormSystemUser dto = FormSystemUser.builder()								
+											   .organizationCode(entity.getOrganizationCode())
 											   .userId(entity.getId())
 											   .staffNo(entity.getStaffNo())
-											   .name(entity.getName())	
-											   .organizationCode(entity.getOrganizationCode())
-											   .deptCode(dept.map(Dept::getDeptCode).orElse(null))
+											   .name(entity.getName())												   
+											   .deptId(dept.map(Dept::getDeptId).orElse(""))
+											   //.deptName(""))
 											   .mobileNum(entity.getMobileNum())
 											   .email(entity.getEmail())
 											   .imageBase64(entity.getImage())

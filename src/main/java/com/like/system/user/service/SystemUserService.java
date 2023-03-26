@@ -31,10 +31,10 @@ public class SystemUserService {
 	private ProfilePictureRepository profilePictureRepository;
 	
 	public SystemUserService(SystemUserRepository repository
-					  ,AuthorityRepository authorityRepository
-			  		  ,MenuGroupRepository menuRepository
-			  		  ,DeptRepository deptRepository
-			  		  ,ProfilePictureRepository profilePictureRepository) {
+					  		,AuthorityRepository authorityRepository
+					  		,MenuGroupRepository menuRepository
+					  		,DeptRepository deptRepository
+					  		,ProfilePictureRepository profilePictureRepository) {
 		this.repository = repository;
 		this.menuRepository = menuRepository;
 		this.deptRepository = deptRepository;
@@ -70,7 +70,7 @@ public class SystemUserService {
 			user = repository.findById(dto.userId()).orElse(null); 
 		}
 		
-		Dept dept = dto.deptCode() == null ? null : deptRepository.findById(dto.deptCode()).orElse(null); 
+		Dept dept = dto.deptId() == null ? null : deptRepository.findById(dto.deptId()).orElse(null); 
 		
 		Set<Authority> authorityList = new LinkedHashSet<>(authorityRepository.findAllById(dto.authorityList()));		
 		Set<MenuGroup> menuGroupList = new LinkedHashSet<>(menuRepository.findAllById(dto.menuGroupList()));		 

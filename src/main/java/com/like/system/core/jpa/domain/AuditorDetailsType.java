@@ -11,8 +11,8 @@ import org.hibernate.usertype.CompositeUserType;
 public class AuditorDetailsType implements CompositeUserType<AuditorDetails> {
 
 	public static class AuditorDetailsMapper {
-		String loggedUser;   
-	    String hostIp;
+		String loggedUser;
+		String hostIp;		   	    
 	}
 	
 	@Override
@@ -27,9 +27,9 @@ public class AuditorDetailsType implements CompositeUserType<AuditorDetails> {
 
 	@Override
 	public AuditorDetails instantiate(ValueAccess values, SessionFactoryImplementor sessionFactory) {
-		final String loggedUser = values.getValue( 0, String.class );
-		final String hostIp = values.getValue( 1, String.class );
-		return new AuditorDetails(loggedUser, hostIp);
+		final String hostIp = values.getValue( 0, String.class );
+		final String loggedUser = values.getValue( 1, String.class );
+		return new AuditorDetails(hostIp, loggedUser);
 	}
 	
 	@Override
@@ -45,13 +45,12 @@ public class AuditorDetailsType implements CompositeUserType<AuditorDetails> {
 
 	@Override
 	public boolean equals(AuditorDetails x, AuditorDetails y) {
-		return x == y || x != null && Objects.equals( x.getLoggedUser(), y.getLoggedUser() )
-				&& Objects.equals( x.getHostIp(), y.getHostIp() );
+		return x == y || x != null && Objects.equals( x.getLoggedUser(), y.getLoggedUser() ) && Objects.equals( x.getHostIp(), y.getHostIp() );
 	}
 
 	@Override
 	public int hashCode(AuditorDetails x) {
-		return Objects.hash( x.getLoggedUser(), x.getHostIp() );
+		return Objects.hash( x.getHostIp(), x.getLoggedUser() );
 	}
 
 	@Override
@@ -66,7 +65,7 @@ public class AuditorDetailsType implements CompositeUserType<AuditorDetails> {
 
 	@Override
 	public Serializable disassemble(AuditorDetails value) {
-		return new String[] { value.getLoggedUser(), value.getHostIp() };
+		return new String[] { value.getHostIp(), value.getLoggedUser() };
 
 	}
 

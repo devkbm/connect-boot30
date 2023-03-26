@@ -5,22 +5,21 @@ import java.util.Objects;
 
 public final class AuditorDetails implements Serializable {    
 	private static final long serialVersionUID = 6038720304169228462L;
-
-	private final String loggedUser;   
-
+	   
     private final String hostIp;
+    private final String loggedUser;
 
-    public AuditorDetails(String loggedUser, String hostIp) {
-        this.loggedUser = loggedUser;        
-        this.hostIp = hostIp;
-    }
-
-    public String getLoggedUser() {
-        return loggedUser;
+    public AuditorDetails(String hostIp, String loggedUser) {
+    	this.hostIp = hostIp;
+    	this.loggedUser = loggedUser;                
     }
     
     public String getHostIp() {
         return hostIp;
+    }
+    
+    public String getLoggedUser() {
+        return loggedUser;
     }
 
     @Override
@@ -28,12 +27,11 @@ public final class AuditorDetails implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuditorDetails that = (AuditorDetails) o;
-        return Objects.equals(loggedUser, that.loggedUser) &&     
-            Objects.equals(hostIp, that.hostIp);
+        return Objects.equals(hostIp, that.hostIp) && Objects.equals(loggedUser, that.loggedUser);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(loggedUser, hostIp);
+        return Objects.hash(hostIp, loggedUser);
     }
 }

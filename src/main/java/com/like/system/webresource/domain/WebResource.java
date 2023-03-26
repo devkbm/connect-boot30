@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString(callSuper=true, includeFieldNames=true)
 @Entity
 @Table(name = "comresource")
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 public class WebResource extends AbstractAuditEntity implements Serializable{	
 	
 	private static final long serialVersionUID = 4402275274864737663L;

@@ -74,7 +74,7 @@ public class ResponseDeptHierarchy {
 		this.comment = comment;
 		
 		this.title 	= this.deptNameKorean;
-		this.key 	= this.deptCode;			
+		this.key 	= this.deptId;			
 	}
 
 	public void setChildren(List<ResponseDeptHierarchy> children) {
