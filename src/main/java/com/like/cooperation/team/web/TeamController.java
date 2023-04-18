@@ -38,7 +38,7 @@ public class TeamController {
 	}
 		
 	@PostMapping("/api/grw/team")
-	public ResponseEntity<?> saveTeam(@Valid @RequestBody TeamDTO.Form dto) {				
+	public ResponseEntity<?> saveTeam(@RequestBody @Valid TeamDTO.Form dto) {				
 		 												
 		teamService.saveTeam(dto);		
 										 					
