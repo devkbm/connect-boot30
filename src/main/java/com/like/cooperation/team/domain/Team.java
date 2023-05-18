@@ -16,8 +16,6 @@ import jakarta.persistence.Table;
 import org.hibernate.annotations.Comment;
 
 import com.like.system.core.jpa.domain.AbstractAuditEntity;
-import com.like.system.core.web.exception.BusinessException;
-import com.like.system.core.web.exception.ErrorCode;
 import com.like.system.user.domain.SystemUser;
 
 import lombok.AccessLevel;
@@ -52,12 +50,18 @@ public class Team extends AbstractAuditEntity {
 		this.teamName = teamName;		
 	}	
 	
+	public Team(String teamName, List<SystemUser> userList) {
+		this.teamName = teamName;
+		this.addMembers(userList);
+	}
+	
 	public void modify(String teamName) {
 		this.teamName = teamName;
 	}					
 	
 	public void addMember(SystemUser user)
 	{
+		/*
 		if (members == null) this.members = new ArrayList<TeamMember>();
 		
 		boolean isExist = this.members.stream()
@@ -67,10 +71,25 @@ public class Team extends AbstractAuditEntity {
 		if (isExist) throw new BusinessException("동일한 데이터가 존재합니다. 아이디 : " + user.getId(), ErrorCode.ID_DUPLICATION);
 		
 		this.members.add(new TeamMember(this, user));
+		*/
 	}
 	
 	public void addMemberList(List<TeamMember> memberList) {
 		this.members.addAll(memberList);
+	}
+	
+	public void addMembers(List<SystemUser> userList) {		
+		for (SystemUser user : userList) {
+			if (!isMember(user)) {				
+				this.members.add(new TeamMember(this, user));
+			}
+		}
+	}
+	
+	private boolean isMember(SystemUser user) {					
+		return this.members.stream()
+						   .map(r -> r.getId().getUserId())					
+						   .anyMatch(e -> e.equals(user.getId()));
 	}
 	
 }

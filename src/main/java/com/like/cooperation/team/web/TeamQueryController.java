@@ -43,7 +43,7 @@ public class TeamQueryController {
 		return toList(list, MessageUtil.getQueryMessage(list.size()));												
 	}
 	
-	@GetMapping("/api/grw/allmember")
+	@GetMapping("/api/grw/team/allmember")
 	public ResponseEntity<?> getAllMemberList(SystemUserDTO.Search condition) {
 				
 		List<SystemUser> list = service.getAllMember(condition);						 				

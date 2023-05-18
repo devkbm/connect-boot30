@@ -27,7 +27,7 @@ public class TeamController {
 		this.teamService = teamService;		
 	}
 				
-	@GetMapping("/api/grw/team/{id}")
+	@GetMapping("/api/grw/team/{teamId}")
 	public ResponseEntity<?> getTeam(@PathVariable Long teamId) {
 						
 		Team team = teamService.getTeam(teamId);				

@@ -22,7 +22,7 @@ public class TeamMemberDTO {
 						
 			return Form.builder()
 					   .teamId(entity.getTeam().getTeamId())
-					   .userId(entity.getUser().getId())
+					   .userId(entity.getId().getUserId())
 					   .authority(entity.getAuthority())
 					   .build();
 		}
