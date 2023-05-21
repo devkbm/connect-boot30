@@ -51,6 +51,10 @@ public class TeamMember extends AbstractAuditEntity {
 		return this.getTeam();
 	}
 	
+	public String getUserId() {
+		return this.id.getUserId();
+	}
+	
 	/*
 	public SystemUser getUser() {
 		return this.user;

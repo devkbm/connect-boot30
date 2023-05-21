@@ -70,7 +70,7 @@ public class TeamDTO {
 		public Team modify(Team entity, SystemUserSearchService service) {
 			entity.modify(teamName);
 								
-			entity.addMembers(service.findUsers(memberList));
+			entity.updateMembers(service.findUsers(memberList));
 			
 			entity.setAppUrl(clientAppUrl);
 			

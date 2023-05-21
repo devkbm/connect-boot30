@@ -150,6 +150,9 @@ VALUES('2022-01-01', '0011', '2022-01-01', '0011', '001HRM', '001HRM3', '001', '
 INSERT INTO comuser
 (user_id, pwd, user_name, non_expired_yn, non_locked_yn, enabled_yn, pass_non_expired_yn, CREATED_DT, CREATED_USER_ID, MODIFIED_DT, MODIFIED_USER_ID, ORG_CD, STAFF_NO) 
 VALUES('0011', '$2a$10$2rUCawd6xNfqGlnqMRV.3.1eapi6HJExs5kMqSJS3oULEZGsYmpra', 'test', 1, 1, 1, 1, '2022-01-01', '0011', '2022-01-01', '0011', '001', '1');
+INSERT INTO comuser
+(user_id, pwd, user_name, non_expired_yn, non_locked_yn, enabled_yn, pass_non_expired_yn, CREATED_DT, CREATED_USER_ID, MODIFIED_DT, MODIFIED_USER_ID, ORG_CD, STAFF_NO) 
+VALUES('0012', '$2a$10$2rUCawd6xNfqGlnqMRV.3.1eapi6HJExs5kMqSJS3oULEZGsYmpra', 'test2', 1, 1, 1, 1, '2022-01-01', '0012', '2022-01-01', '0012', '001', '2');
 
 INSERT INTO comusermenugroup
 (CREATED_DT, CREATED_USER_ID, MODIFIED_DT, MODIFIED_USER_ID, USER_ID, MENU_GROUP_ID)

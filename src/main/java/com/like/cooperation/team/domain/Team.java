@@ -59,19 +59,8 @@ public class Team extends AbstractAuditEntity {
 		this.teamName = teamName;
 	}					
 	
-	public void addMember(SystemUser user)
-	{
-		/*
-		if (members == null) this.members = new ArrayList<TeamMember>();
-		
-		boolean isExist = this.members.stream()
-									  .map(r -> r.getUser())					
-									  .anyMatch(e -> e.equals(user));
-		
-		if (isExist) throw new BusinessException("동일한 데이터가 존재합니다. 아이디 : " + user.getId(), ErrorCode.ID_DUPLICATION);
-		
+	public void addMember(SystemUser user) {
 		this.members.add(new TeamMember(this, user));
-		*/
 	}
 	
 	public void addMemberList(List<TeamMember> memberList) {
@@ -81,9 +70,22 @@ public class Team extends AbstractAuditEntity {
 	public void addMembers(List<SystemUser> userList) {		
 		for (SystemUser user : userList) {
 			if (!isMember(user)) {				
-				this.members.add(new TeamMember(this, user));
+				this.addMember(user);
 			}
 		}
+	}
+	
+	public void updateMembers(List<SystemUser> userList) {
+		if (userList == null || userList.isEmpty()) {
+			this.members.clear();
+		} else {
+			// userList에 없는 맴버는 삭제
+			this.members.removeIf(e -> userList.stream()
+											   .map(r -> r.getId())
+											   .anyMatch(r -> !r.equals(e.getUserId())));
+					
+			this.addMembers(userList);
+		}				
 	}
 	
 	private boolean isMember(SystemUser user) {					
@@ -91,5 +93,5 @@ public class Team extends AbstractAuditEntity {
 						   .map(r -> r.getId().getUserId())					
 						   .anyMatch(e -> e.equals(user.getId()));
 	}
-	
+		
 }
